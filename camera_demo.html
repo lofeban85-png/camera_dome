@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Access Demo</title>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+  <h2>Hacker Camera Test</h2>
+  <p>If you click "Allow", the website can use your camera 👀</p>
+  <video id="video" width="320" height="240" autoplay></video><br>
+  <button id="snap">Take Photo</button>
+  <canvas id="canvas" width="320" height="240"></canvas>
+
+  <script>
+    // Ask for camera permission
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        document.getElementById('video').srcObject = stream;
+      })
+      .catch(err => {
+        alert("Camera access denied!");
+      });
+
+    // Screenshot button
+    document.getElementById("snap").addEventListener("click", function() {
+      let video = document.getElementById("video");
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, 320, 240);
+      alert("Photo taken! (but only stored here)");
+    });
+  </script>
+</body>
+</html>
